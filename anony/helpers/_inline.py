@@ -2,7 +2,6 @@
 # Licensed under the MIT License.
 # This file is part of AnonXMusic
 
-
 from pyrogram import types
 
 from anony import app, config, lang
@@ -15,7 +14,7 @@ class Inline:
         self.ikb = types.InlineKeyboardButton
 
     def cancel_dl(self, text) -> types.InlineKeyboardMarkup:
-        return self.ikm([[self.ikb(text=text, callback_data=f"cancel_dl")]])
+        return self.ikm([[self.ikb(text=text, callback_data="cancel_dl")]])
 
     def controls(
         self,
@@ -25,6 +24,7 @@ class Inline:
         remove: bool = False,
     ) -> types.InlineKeyboardMarkup:
         keyboard = []
+
         if status:
             keyboard.append(
                 [self.ikb(text=status, callback_data=f"controls status {chat_id}")]
@@ -46,9 +46,7 @@ class Inline:
             )
         return self.ikm(keyboard)
 
-    def help_markup(
-        self, _lang: dict, back: bool = False
-    ) -> types.InlineKeyboardMarkup:
+    def help_markup(self, _lang: dict, back: bool = False) -> types.InlineKeyboardMarkup:
         if back:
             rows = [
                 [
@@ -57,7 +55,17 @@ class Inline:
                 ]
             ]
         else:
-            cbs = ["admins", "auth", "blist", "lang", "ping", "play", "queue", "stats", "sudo"]
+            cbs = [
+                "admins",
+                "auth",
+                "blist",
+                "lang",
+                "ping",
+                "play",
+                "queue",
+                "stats",
+                "sudo",
+            ]
             buttons = [
                 self.ikb(text=_lang[f"help_{i}"], callback_data=f"help {cb}")
                 for i, cb in enumerate(cbs)
@@ -89,7 +97,8 @@ class Inline:
             [
                 [
                     self.ikb(
-                        text=_text, callback_data=f"controls force {chat_id} {item_id}"
+                        text=_text,
+                        callback_data=f"controls force {chat_id} {item_id}",
                     )
                 ]
             ]
@@ -140,18 +149,10 @@ class Inline:
                 self.ikb(text=lang["support"], url=config.SUPPORT_CHAT),
                 self.ikb(text=lang["channel"], url=config.SUPPORT_CHANNEL),
             ],
+            [
+                self.ikb(text=lang["language"], callback_data="language")
+            ],
         ]
-        if private:
-            rows += [
-                [
-                    self.ikb(
-                        text=lang["source"],
-                        url="https://github.com/MaybeChiku/AnonXMusic",
-                    )
-                ]
-            ]
-        else:
-            rows += [[self.ikb(text=lang["language"], callback_data="language")]]
         return self.ikm(rows)
 
     def yt_key(self, link: str) -> types.InlineKeyboardMarkup:
@@ -162,4 +163,4 @@ class Inline:
                     self.ikb(text="Open in YouTube", url=link),
                 ],
             ]
-        )
+                            )
