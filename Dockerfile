@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 RUN apt-get update -y && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends ffmpeg curl unzip \
+    && apt-get install -y --no-install-recommends git ffmpeg curl unzip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && curl -fsSL https://deno.land/install.sh | sh
